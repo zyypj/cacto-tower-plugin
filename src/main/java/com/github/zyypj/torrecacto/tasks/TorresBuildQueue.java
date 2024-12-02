@@ -1,31 +1,31 @@
 package com.github.zyypj.torrecacto.tasks;
 
 import com.github.zyypj.torrecacto.Main;
-import com.github.zyypj.torrecacto.models.TowerConfig;
+import com.github.zyypj.torrecacto.models.TorreConfig;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class TowerBuildQueue implements Runnable {
+public class TorresBuildQueue implements Runnable {
 
     private final Main plugin;
-    private final Queue<TowerBuildTask> queue;
+    private final Queue<TorresBuildTask> queue;
     private final int maxLayersPerTick;
 
-    public TowerBuildQueue(Main plugin) {
+    public TorresBuildQueue(Main plugin) {
         this.plugin = plugin;
         this.queue = new LinkedList<>();
         this.maxLayersPerTick = 5;
     }
 
-    public void addTask(Location location, TowerConfig config) {
-        TowerBuildTask task = new TowerBuildTask(plugin, location, config);
+    public void addTask(Location location, TorreConfig config) {
+        TorresBuildTask task = new TorresBuildTask(plugin, location, config);
         queue.add(task);
     }
 
-    public boolean haveSpace(Location baseLocation, int layers) {
+    public boolean canPlace(Location baseLocation, int layers) {
         for (int y = 1; y <= layers * 4; y++) {
             Location location = baseLocation.clone().add(0, y, 0);
             if (location.getBlock().getType() != Material.AIR) {
@@ -42,7 +42,7 @@ public class TowerBuildQueue implements Runnable {
         int layersBuilt = 0;
 
         while (!queue.isEmpty() && layersBuilt < maxLayersPerTick) {
-            TowerBuildTask task = queue.peek();
+            TorresBuildTask task = queue.peek();
 
             if (task.buildTower() == 0) {
                 queue.poll();
@@ -51,5 +51,4 @@ public class TowerBuildQueue implements Runnable {
             }
         }
     }
-
 }

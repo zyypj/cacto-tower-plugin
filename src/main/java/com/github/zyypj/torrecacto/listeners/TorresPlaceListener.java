@@ -8,11 +8,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class TowerPlaceListener implements Listener {
+public class TorresPlaceListener implements Listener {
 
     private final Main plugin;
 
-    public TowerPlaceListener(Main plugin) {
+    public TorresPlaceListener(Main plugin) {
         this.plugin = plugin;
     }
 
@@ -32,13 +32,13 @@ public class TowerPlaceListener implements Listener {
 
         int layers = nbtItem.getInteger("towerLayers");
 
-        if (!plugin.getTowerBuildQueue().haveSpace(e.getClickedBlock().getLocation(), layers)) {
-            e.getPlayer().sendMessage("§cEspaço insuficiente para construir a torre.");
+        if (!plugin.getTorresBuildQueue().canPlace(e.getClickedBlock().getLocation(), layers)) {
+            e.getPlayer().sendMessage(plugin.getConfigManager().getMessage("cant-put"));
             return;
         }
 
-        plugin.getTowerBuildQueue().addTask(e.getClickedBlock().getLocation(), plugin.getConfigManager().getTowerByLayers(layers));
-        e.getPlayer().sendMessage("§aTorre iniciada com sucesso!");
+        plugin.getTorresBuildQueue().addTask(e.getClickedBlock().getLocation(), plugin.getConfigManager().getTowerByLayers(layers));
+        e.getPlayer().sendMessage(plugin.getConfigManager().getMessage("tower-placed"));
         item.setAmount(item.getAmount() - 1);
     }
 }

@@ -1,7 +1,7 @@
 package com.github.zyypj.torrecacto.configuration;
 
 import com.github.zyypj.torrecacto.Main;
-import com.github.zyypj.torrecacto.models.TowerConfig;
+import com.github.zyypj.torrecacto.models.TorreConfig;
 import lombok.Getter;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -12,7 +12,7 @@ public class ConfigManager {
 
     private final Main plugin;
     @Getter
-    private final Map<String, TowerConfig> towers;
+    private final Map<String, TorreConfig> towers;
 
     public ConfigManager(Main plugin) {
         this.plugin = plugin;
@@ -23,7 +23,7 @@ public class ConfigManager {
             for (String key : towerSection.getKeys(false)) {
                 ConfigurationSection section = towerSection.getConfigurationSection(key);
                 if (section != null && section.contains("item.material") && section.contains("item.layers")) {
-                    towers.put(key.toLowerCase(), new TowerConfig(section));
+                    towers.put(key.toLowerCase(), new TorreConfig(section));
                 }
             }
         }
@@ -32,11 +32,11 @@ public class ConfigManager {
 
     public String getMessage(String key) {
         String message = plugin.getConfig().getString(key.startsWith("messages.") ? key : "messages." + key);
-        return message != null ? message.replace("&", "§") : "§cMensagem não encontrada!";
+        return message != null ? message.replace("&", "§") : "§cMensagem não encontrada: " + key;
     }
 
-    public TowerConfig getTowerByLayers(int layers) {
-        for (TowerConfig config : towers.values()) {
+    public TorreConfig getTowerByLayers(int layers) {
+        for (TorreConfig config : towers.values()) {
             if (config.getLayers() == layers) {
                 return config;
             }
@@ -52,13 +52,13 @@ public class ConfigManager {
             for (String key : towerSection.getKeys(false)) {
                 ConfigurationSection section = towerSection.getConfigurationSection(key);
                 if (section != null && section.contains("item.material") && section.contains("item.layers")) {
-                    towers.put(key.toLowerCase(), new TowerConfig(section));
+                    towers.put(key.toLowerCase(), new TorreConfig(section));
                 }
             }
         }
     }
 
-    public TowerConfig getTowerConfig(String key) {
+    public TorreConfig getTowerConfig(String key) {
         return towers.get(key.toLowerCase());
     }
 }

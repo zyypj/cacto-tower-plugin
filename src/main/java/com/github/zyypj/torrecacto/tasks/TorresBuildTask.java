@@ -1,19 +1,19 @@
 package com.github.zyypj.torrecacto.tasks;
 
 import com.github.zyypj.torrecacto.Main;
-import com.github.zyypj.torrecacto.models.TowerConfig;
+import com.github.zyypj.torrecacto.models.TorreConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
-public class TowerBuildTask {
+public class TorresBuildTask {
 
     private final Main plugin;
     private final Location baseLocation;
-    private final TowerConfig config;
+    private final TorreConfig config;
     private int currentLayer = 0;
 
-    public TowerBuildTask(Main plugin, Location baseLocation, TowerConfig config) {
+    public TorresBuildTask(Main plugin, Location baseLocation, TorreConfig config) {
         this.plugin = plugin;
         this.baseLocation = baseLocation.clone();
         this.config = config;
@@ -24,8 +24,6 @@ public class TowerBuildTask {
         if (currentLayer >= config.getLayers()) return 0;
 
         int y = baseLocation.getBlockY() + (currentLayer * 4);
-
-        System.out.println("Construindo camada na altura: " + y);
 
         makeLayer(y, Material.STONE);
         makeLayer(y + 1, Material.SAND);

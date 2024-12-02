@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 @Getter
-public class TowerConfig {
+public class TorreConfig {
 
     private final ItemStack item;
     private final int layers;
@@ -16,7 +16,7 @@ public class TowerConfig {
     private final List<String> itemLore;
     private final ConfigurationSection config;
 
-    public TowerConfig(ConfigurationSection section) {
+    public TorreConfig(ConfigurationSection section) {
         if (section == null) {
             throw new IllegalArgumentException("Configuração da torre está nula.");
         }

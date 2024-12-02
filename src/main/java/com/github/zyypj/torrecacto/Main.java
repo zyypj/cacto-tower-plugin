@@ -2,8 +2,8 @@ package com.github.zyypj.torrecacto;
 
 import com.github.zyypj.torrecacto.command.TorresCommand;
 import com.github.zyypj.torrecacto.configuration.ConfigManager;
-import com.github.zyypj.torrecacto.listeners.TowerPlaceListener;
-import com.github.zyypj.torrecacto.tasks.TowerBuildQueue;
+import com.github.zyypj.torrecacto.listeners.TorresPlaceListener;
+import com.github.zyypj.torrecacto.tasks.TorresBuildQueue;
 import com.google.common.base.Stopwatch;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ public final class Main extends JavaPlugin {
 
     private ConfigManager configManager;
 
-    private TowerBuildQueue towerBuildQueue;
+    private TorresBuildQueue torresBuildQueue;
 
     @Override
     public void onEnable() {
@@ -73,8 +73,8 @@ public final class Main extends JavaPlugin {
         debug(" ", true);
         debug("&eCarregando gerenciadores...", true);
 
-        towerBuildQueue = new TowerBuildQueue(this);
-        getServer().getScheduler().runTaskTimer(this, towerBuildQueue, 1L, 1L);
+        torresBuildQueue = new TorresBuildQueue(this);
+        getServer().getScheduler().runTaskTimer(this, torresBuildQueue, 1L, 1L);
 
         debug("&aGerenciadores carregados em " + stopwatch.stop() + "!", true);
 
@@ -86,7 +86,7 @@ public final class Main extends JavaPlugin {
         debug(" ", true);
         debug("&eRegistrando eventos..", true);
 
-        getServer().getPluginManager().registerEvents(new TowerPlaceListener(this), this);
+        getServer().getPluginManager().registerEvents(new TorresPlaceListener(this), this);
 
         debug("&aEventos registrados em " + stopwatch.stop() + "!", true);
 

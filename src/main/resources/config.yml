@@ -49,3 +49,5 @@ messages:
   no-permission: "&cVocê não tem permissão para isso!"
   send-tower: "&aVocê deu {AMOUNT} {TORRE-NAME} &apara {JOGADOR}!"
   receive-tower: "&aVocê recebeu {AMOUNT} {TORRE-NAME}&a!"
+  cant-put: "&cVocê não pode colocar a torre aqui!"
+  tower-placed: "&aTorre colocada com sucesso!"

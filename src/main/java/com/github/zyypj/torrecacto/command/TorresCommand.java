@@ -1,7 +1,7 @@
 package com.github.zyypj.torrecacto.command;
 
 import com.github.zyypj.torrecacto.Main;
-import com.github.zyypj.torrecacto.models.TowerConfig;
+import com.github.zyypj.torrecacto.models.TorreConfig;
 import com.github.zyypj.torrecacto.utils.ItemBuilder;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
@@ -28,6 +28,12 @@ public class TorresCommand implements CommandExecutor {
             return false;
         }
 
+        if (args.length == 0) {
+            sender.sendMessage("§a/torres reload");
+            sender.sendMessage("§a/torres give &7<jogador> <id> <quantidade>");
+            return true;
+        }
+
         if (args[0].equalsIgnoreCase("reload")) {
             if (!sender.hasPermission("torres.reload")) {
                 sender.sendMessage(plugin.getConfigManager().getMessage("no-permission"));
@@ -47,20 +53,20 @@ public class TorresCommand implements CommandExecutor {
 
             if (args.length != 4) {
                 sender.sendMessage("§cUse: /torres give <jogador> <idDaTorre> <quantidade>");
-                return true;
+                return false;
             }
 
             Player target = Bukkit.getPlayer(args[1]);
             if (target == null) {
                 sender.sendMessage("§cJogador não encontrado.");
-                return true;
+                return false;
             }
 
             String towerId = args[2];
-            TowerConfig config = plugin.getConfigManager().getTowerConfig(towerId);
+            TorreConfig config = plugin.getConfigManager().getTowerConfig(towerId);
             if (config == null) {
                 sender.sendMessage("§cTorre com ID " + towerId + " não encontrada.");
-                return true;
+                return false;
             }
 
             int quantity;
@@ -68,7 +74,7 @@ public class TorresCommand implements CommandExecutor {
                 quantity = Integer.parseInt(args[3]);
             } catch (NumberFormatException e) {
                 sender.sendMessage("§cQuantidade inválida.");
-                return true;
+                return false;
             }
 
             ItemStack towerItem = new ItemBuilder(config.getItem())
