@@ -13,7 +13,7 @@ public class TowerBuildQueue implements Runnable {
 
     public TowerBuildQueue() {
         this.queue = new LinkedList<>();
-        this.maxLayersPerTick = 5; // Configurável, limite de camadas por tick
+        this.maxLayersPerTick = 5;
     }
 
     /**
@@ -53,9 +53,6 @@ public class TowerBuildQueue implements Runnable {
         }
     }
 
-    /**
-     * Executa a fila, construindo camadas de forma controlada por tick.
-     */
     @Override
     public void run() {
         if (queue.isEmpty()) {
@@ -66,7 +63,7 @@ public class TowerBuildQueue implements Runnable {
         while (!queue.isEmpty() && layersBuilt < maxLayersPerTick) {
             TowerBuildTask task = queue.peek();
             if (task.buildLayer() == 0) {
-                queue.poll(); // Remove a tarefa se estiver concluída
+                queue.poll();
             } else {
                 layersBuilt++;
             }
