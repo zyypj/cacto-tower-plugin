@@ -37,6 +37,15 @@ public class ConfigManager {
         return plugin.getConfig().getString(key).replace("&", "§");
     }
 
+    public TowerConfig getTowerConfigByLayers(int layers) {
+        for (TowerConfig config : towers.values()) {
+            if (config.getLayers() == layers) {
+                return config;
+            }
+        }
+        return null;
+    }
+
     public FileConfiguration getConfig() {
         return plugin.getConfig();
     }

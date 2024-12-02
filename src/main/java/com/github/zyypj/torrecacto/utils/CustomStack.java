@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class CustomStack {
+
     public static ItemStack get(String name) {
         final String[] splitted_name = name.split(":");
         ItemStack stack;

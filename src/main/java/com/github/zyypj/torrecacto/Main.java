@@ -23,6 +23,8 @@ public final class Main extends JavaPlugin {
 
         loadConfig();
 
+        setupManagers();
+
         debug(" ", false);
         debug("&2&lTorreCacto &2iniciado em " + stopwatch.stop() + "!", false);
 

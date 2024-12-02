@@ -1,8 +1,10 @@
 package com.github.zyypj.torrecacto.tasks;
 
 import com.github.zyypj.torrecacto.models.TowerConfig;
+import com.github.zyypj.torrecacto.utils.CustomStack;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class TowerBuildTask {
 
@@ -15,32 +17,38 @@ public class TowerBuildTask {
         this.config = config;
     }
 
-    public int buildLayer() {
+    public int buildTower() {
 
         if (currentLayer >= config.getLayers()) return 0;
 
         int y = baseLocation.getBlockY() + (currentLayer * 3);
 
-        buildLayer(y, config.getFirstLayerMaterial().getType());
-        buildLayer(y + 1, config.getSecondLayerMaterial().getType());
-        buildLayer(y + 2, config.getThirdLayerMaterial().getType());
+        makeLayer(y, getBlock("first-layer"));
+        makeLayer(y + 1, getBlock("second-layer"));
+        makeLayer(y + 2, getBlock("third-layer"));
 
         if (currentLayer == config.getLayers() - 1) {
-            placeBlock(baseLocation.clone().add(0, y + 3, 0), config.getFourthLayerMaterial().getType());
+            Location fenceLocation = baseLocation.clone().add(0, y + 3, 0);
+            fenceLocation.getBlock().setType(getBlock("fourth-layer"));
         }
 
         currentLayer++;
         return 1;
     }
 
-    private void buildLayer(int y, Material material) {
-        placeBlock(baseLocation.clone().add(1, y, 0), material); // Leste
-        placeBlock(baseLocation.clone().add(-1, y, 0), material); // Oeste
-        placeBlock(baseLocation.clone().add(0, y, 1), material); // Norte
-        placeBlock(baseLocation.clone().add(0, y, -1), material); // Sul
+    private void makeLayer(int y, Material material) {
+        baseLocation.clone().add(0, y, 1).getBlock().setType(material); // Norte
+        baseLocation.clone().add(0, y, -1).getBlock().setType(material); // Sul
+        baseLocation.clone().add(1, y, 0).getBlock().setType(material); // Leste
+        baseLocation.clone().add(-1, y, 0).getBlock().setType(material); // Oeste
     }
 
-    private void placeBlock(Location location, Material material) {
-        location.getBlock().setType(material);
+    private Material getBlock(String layerKey) {
+        String materialString = config.getConfig().getString(layerKey);
+        ItemStack stack = CustomStack.get(materialString);
+        if (stack != null) {
+            return stack.getType();
+        }
+        return Material.AIR;
     }
 }

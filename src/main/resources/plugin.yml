@@ -1,4 +1,5 @@
 name: TorreCacto
 author: tadeu
+depend: [NBTAPI]
 version: '${project.version}'
 main: com.github.zyypj.torrecacto.Main
