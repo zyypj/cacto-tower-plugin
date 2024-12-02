@@ -3,3 +3,6 @@ author: tadeu
 depend: [NBTAPI]
 version: '${project.version}'
 main: com.github.zyypj.torrecacto.Main
+commands:
+  torres:
+    aliases: [torre]

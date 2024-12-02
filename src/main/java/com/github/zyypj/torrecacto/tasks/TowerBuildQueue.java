@@ -23,9 +23,9 @@ public class TowerBuildQueue implements Runnable {
     }
 
     public boolean haveSpace(Location baseLocation, int layers) {
-        for (int y = 0; y < layers * 3; y++) {
+        for (int y = 1; y <= layers * 3; y++) {
             Location location = baseLocation.clone().add(0, y, 0);
-            if (location.getBlock().getType() == Material.AIR) {
+            if (location.getBlock().getType() != Material.AIR) {
                 return false;
             }
         }

@@ -1,6 +1,8 @@
 package com.github.zyypj.torrecacto;
 
+import com.github.zyypj.torrecacto.command.TorresCommand;
 import com.github.zyypj.torrecacto.configuration.ConfigManager;
+import com.github.zyypj.torrecacto.listeners.TowerPlaceListener;
 import com.github.zyypj.torrecacto.tasks.TowerBuildQueue;
 import com.google.common.base.Stopwatch;
 import lombok.Getter;
@@ -25,7 +27,9 @@ public final class Main extends JavaPlugin {
 
         setupManagers();
 
-        debug(" ", false);
+        registerListeners();
+        registerCommands();
+
         debug("&2&lTorreCacto &2iniciado em " + stopwatch.stop() + "!", false);
 
     }
@@ -60,7 +64,6 @@ public final class Main extends JavaPlugin {
 
         configManager = new ConfigManager(this);
 
-        debug(" ", true);
         debug("&aConfigurações iniciadas em " + stopwatch.stop() + "!", true);
     }
 
@@ -73,8 +76,32 @@ public final class Main extends JavaPlugin {
         towerBuildQueue = new TowerBuildQueue();
         getServer().getScheduler().runTaskTimer(this, towerBuildQueue, 1L, 1L);
 
-        debug(" ", true);
         debug("&aGerenciadores carregados em " + stopwatch.stop() + "!", true);
+
+    }
+
+    private void registerListeners() {
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        debug(" ", true);
+        debug("&eRegistrando eventos..", true);
+
+        getServer().getPluginManager().registerEvents(new TowerPlaceListener(this), this);
+
+        debug("&aEventos registrados em " + stopwatch.stop() + "!", true);
+
+    }
+
+    private void registerCommands() {
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        debug(" ", true);
+        debug("&eRegistrando comandos...", true);
+
+        getCommand("torres").setExecutor(new TorresCommand(this));
+
+        debug("&aComandos registrados em " + stopwatch.stop() + "!", true);
+        debug(" ", true);
 
     }
 }

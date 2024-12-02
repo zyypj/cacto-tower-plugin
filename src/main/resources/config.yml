@@ -45,12 +45,7 @@ torre3:
     # Quantia de camadas
     layers: 7
 
-first-layer: "STONE:0"
-second-layer: "SAND:0"
-third-layer: "CACTUS:0"
-fourth-layer: "OAK_FENCE:0"
-
 messages:
   no-permission: "&cVocê não tem permissão para isso!"
-  send-tower: "&aVocê deu {AMOUNT} {TORRE-NAME} para {JOGADOR}!"
-  receive-tower: "&aVocê recebeu {AMOUNT} {TORRE-NAME}!"
+  send-tower: "&aVocê deu {AMOUNT} {TORRE-NAME} &apara {JOGADOR}!"
+  receive-tower: "&aVocê recebeu {AMOUNT} {TORRE-NAME}&a!"

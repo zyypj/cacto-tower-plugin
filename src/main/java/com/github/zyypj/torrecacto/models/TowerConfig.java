@@ -14,11 +14,22 @@ public class TowerConfig {
     private final int layers;
     private final String itemName;
     private final List<String> itemLore;
+    private final ConfigurationSection config;
 
     public TowerConfig(ConfigurationSection section) {
-        this.item = CustomStack.get(section.getString("item.material"));
-        this.layers = section.getInt("layers", 1);
+        if (section == null) {
+            throw new IllegalArgumentException("Configuração da torre está nula.");
+        }
+
+        String materialString = section.getString("item.material");
+        if (materialString == null || materialString.isEmpty()) {
+            throw new IllegalArgumentException("Material da torre não especificado em " + section.getName());
+        }
+
+        this.item = CustomStack.get(materialString);
+        this.layers = section.getInt("item.layers", 1);
         this.itemName = section.getString("item.name", "§fTorre");
         this.itemLore = section.getStringList("item.lore");
+        this.config = section;
     }
 }

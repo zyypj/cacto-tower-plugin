@@ -86,13 +86,17 @@ public class TorresCommand implements CommandExecutor {
             sender.sendMessage(plugin.getConfigManager().getMessage("send-tower")
                     .replace("{AMOUNT}", String.valueOf(quantity))
                     .replace("{TORRE-NAME}", config.getItemName())
-                    .replace("{JOGADOR}", target.getName()));
+                    .replace("{JOGADOR}", target.getName())
+                    .replace("&", "§"));
             target.sendMessage(plugin.getConfigManager().getMessage("receive-tower")
                     .replace("{AMOUNT}", String.valueOf(quantity))
-                    .replace("{TORRE-NAME}", config.getItemName()));
+                    .replace("{TORRE-NAME}", config.getItemName())
+                    .replace("&", "§"));
             return true;
         }
 
+        sender.sendMessage("§a/torres reload");
+        sender.sendMessage("§a/torres give &7<jogador> <id> <quantidade>");
         return false;
     }
 }

@@ -1,10 +1,8 @@
 package com.github.zyypj.torrecacto.tasks;
 
 import com.github.zyypj.torrecacto.models.TowerConfig;
-import com.github.zyypj.torrecacto.utils.CustomStack;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public class TowerBuildTask {
 
@@ -21,15 +19,15 @@ public class TowerBuildTask {
 
         if (currentLayer >= config.getLayers()) return 0;
 
-        int y = baseLocation.getBlockY() + (currentLayer * 3);
+        int y = baseLocation.getBlockY() + 1 + (currentLayer * 3);
 
-        makeLayer(y, getBlock("first-layer"));
-        makeLayer(y + 1, getBlock("second-layer"));
-        makeLayer(y + 2, getBlock("third-layer"));
+        makeLayer(y, Material.STONE);
+        makeLayer(y + 1, Material.SAND);
+        makeLayer(y + 2, Material.CACTUS);
 
         if (currentLayer == config.getLayers() - 1) {
             Location fenceLocation = baseLocation.clone().add(0, y + 3, 0);
-            fenceLocation.getBlock().setType(getBlock("fourth-layer"));
+            fenceLocation.getBlock().setType(Material.FENCE);
         }
 
         currentLayer++;
@@ -41,14 +39,5 @@ public class TowerBuildTask {
         baseLocation.clone().add(0, y, -1).getBlock().setType(material); // Sul
         baseLocation.clone().add(1, y, 0).getBlock().setType(material); // Leste
         baseLocation.clone().add(-1, y, 0).getBlock().setType(material); // Oeste
-    }
-
-    private Material getBlock(String layerKey) {
-        String materialString = config.getConfig().getString(layerKey);
-        ItemStack stack = CustomStack.get(materialString);
-        if (stack != null) {
-            return stack.getType();
-        }
-        return Material.AIR;
     }
 }
