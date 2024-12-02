@@ -1,0 +1,51 @@
+debug: true
+
+torre1:
+  # Item ativável da torre
+  item:
+    material: "CACTUS:0"
+    name: "&eTorre de Cacto Pequena"
+    lore:
+      - "&7Use essa torre de cacto"
+      - "&7em seu terreno."
+      - ""
+      - " &fCamadas: &73"
+      - ""
+      - "&aClique no chão para colocar"
+    # Quantia de camadas
+    layers: 3
+
+torre2:
+  # Item ativável da torre
+  item:
+    material: "CACTUS:0"
+    name: "&eTorre de Cacto Média"
+    lore:
+      - "&7Use essa torre de cacto"
+      - "&7em seu terreno."
+      - ""
+      - " &fCamadas: &75"
+      - ""
+      - "&aClique no chão para colocar"
+    # Quantia de camadas
+    layers: 5
+
+torre3:
+  # Item ativável da torre
+  item:
+    material: "CACTUS:0"
+    name: "&eTorre de Cacto Grande"
+    lore:
+      - "&7Use essa torre de cacto"
+      - "&7em seu terreno."
+      - ""
+      - " &fCamadas: &77"
+      - ""
+      - "&aClique no chão para colocar"
+    # Quantia de camadas
+    layers: 7
+
+first-layer: "STONE:0"
+second-layer: "SAND:0"
+third-layer: "CACTUS:0"
+fourth-layer: "OAK_FENCE:0"

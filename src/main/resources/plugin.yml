@@ -1,0 +1,4 @@
+name: TorreCacto
+author: tadeu
+version: '${project.version}'
+main: com.github.zyypj.torrecacto.Main
