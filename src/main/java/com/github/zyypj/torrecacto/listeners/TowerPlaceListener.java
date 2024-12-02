@@ -34,7 +34,7 @@ public class TowerPlaceListener implements Listener {
             return;
         }
 
-        plugin.getTowerBuildQueue().addTask(e.getClickedBlock().getLocation(), plugin.getConfigManager().getTowerConfigByLayers(layers));
+        plugin.getTowerBuildQueue().addTask(e.getClickedBlock().getLocation(), plugin.getConfigManager().getTowerByLayers(layers));
         e.getPlayer().sendMessage("§aTorre iniciada com sucesso!");
         item.setAmount(item.getAmount() - 1);
     }
