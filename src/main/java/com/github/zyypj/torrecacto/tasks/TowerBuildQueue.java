@@ -1,5 +1,6 @@
 package com.github.zyypj.torrecacto.tasks;
 
+import com.github.zyypj.torrecacto.Main;
 import com.github.zyypj.torrecacto.models.TowerConfig;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,16 +10,18 @@ import java.util.Queue;
 
 public class TowerBuildQueue implements Runnable {
 
+    private final Main plugin;
     private final Queue<TowerBuildTask> queue;
     private final int maxLayersPerTick;
 
-    public TowerBuildQueue() {
+    public TowerBuildQueue(Main plugin) {
+        this.plugin = plugin;
         this.queue = new LinkedList<>();
         this.maxLayersPerTick = 5;
     }
 
     public void addTask(Location location, TowerConfig config) {
-        TowerBuildTask task = new TowerBuildTask(location, config);
+        TowerBuildTask task = new TowerBuildTask(plugin, location, config);
         queue.add(task);
     }
 
@@ -34,20 +37,19 @@ public class TowerBuildQueue implements Runnable {
 
     @Override
     public void run() {
-        if (queue.isEmpty()) {
-            return;
-        }
+        if (queue.isEmpty()) return;
 
         int layersBuilt = 0;
+
         while (!queue.isEmpty() && layersBuilt < maxLayersPerTick) {
             TowerBuildTask task = queue.peek();
-            System.out.println("Processando construção da torre...");
+
             if (task.buildTower() == 0) {
                 queue.poll();
-                System.out.println("Construção da torre concluída.");
             } else {
                 layersBuilt++;
             }
         }
     }
+
 }

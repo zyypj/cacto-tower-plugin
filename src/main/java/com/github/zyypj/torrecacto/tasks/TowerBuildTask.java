@@ -1,16 +1,20 @@
 package com.github.zyypj.torrecacto.tasks;
 
+import com.github.zyypj.torrecacto.Main;
 import com.github.zyypj.torrecacto.models.TowerConfig;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
 public class TowerBuildTask {
 
+    private final Main plugin;
     private final Location baseLocation;
     private final TowerConfig config;
     private int currentLayer = 0;
 
-    public TowerBuildTask(Location baseLocation, TowerConfig config) {
+    public TowerBuildTask(Main plugin, Location baseLocation, TowerConfig config) {
+        this.plugin = plugin;
         this.baseLocation = baseLocation.clone();
         this.config = config;
     }
@@ -19,14 +23,14 @@ public class TowerBuildTask {
 
         if (currentLayer >= config.getLayers()) return 0;
 
-        int y = baseLocation.getBlockY() + (currentLayer * 4); // Cada layer agora ocupa 4 blocos de altura.
+        int y = baseLocation.getBlockY() + (currentLayer * 4);
 
         System.out.println("Construindo camada na altura: " + y);
 
-        makeLayer(y, Material.STONE);  // Pedra
-        makeLayer(y + 1, Material.SAND);  // Areia
-        makeLayer(y + 2, Material.CACTUS);  // Cacto
-        makeLayer(y + 3, Material.FENCE);  // Cerca no final da layer
+        makeLayer(y, Material.STONE);
+        makeLayer(y + 1, Material.SAND);
+        makeLayer(y + 2, Material.CACTUS);
+        makeLayer(y + 3, Material.FENCE);
 
         currentLayer++;
 
@@ -50,10 +54,11 @@ public class TowerBuildTask {
     }
 
     private void placeBlock(Location location, Material material) {
-        if (location.getBlock().getType() != material) {
-            location.getBlock().setType(material);
-            location.getBlock().getState().update(true, true);
-            System.out.println("Bloco atualizado em " + location + " com material: " + material);
-        }
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            if (location.getBlock().getType() != material) {
+                location.getBlock().setType(material);
+                location.getBlock().getState().update(true, true);
+            }
+        });
     }
 }

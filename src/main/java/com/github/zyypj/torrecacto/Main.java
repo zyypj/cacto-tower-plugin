@@ -73,7 +73,7 @@ public final class Main extends JavaPlugin {
         debug(" ", true);
         debug("&eCarregando gerenciadores...", true);
 
-        towerBuildQueue = new TowerBuildQueue();
+        towerBuildQueue = new TowerBuildQueue(this);
         getServer().getScheduler().runTaskTimer(this, towerBuildQueue, 1L, 1L);
 
         debug("&aGerenciadores carregados em " + stopwatch.stop() + "!", true);
