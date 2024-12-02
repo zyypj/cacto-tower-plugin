@@ -1,6 +1,6 @@
 name: TorreCacto
 author: tadeu
-depend: [NBTAPI]
+depend: [NBTAPI, PlotSquared]
 version: '${project.version}'
 main: com.github.zyypj.torrecacto.Main
 commands:

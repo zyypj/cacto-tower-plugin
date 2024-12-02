@@ -32,7 +32,7 @@ public class TorresPlaceListener implements Listener {
 
         int layers = nbtItem.getInteger("towerLayers");
 
-        if (!plugin.getTorresBuildQueue().canPlace(e.getClickedBlock().getLocation(), layers)) {
+        if (!plugin.getTorresBuildQueue().canPlace(e.getPlayer(), e.getClickedBlock().getLocation(), layers)) {
             e.getPlayer().sendMessage(plugin.getConfigManager().getMessage("cant-put"));
             return;
         }
