@@ -2,8 +2,10 @@ package com.github.zyypj.torrecacto.tasks;
 
 import com.github.zyypj.torrecacto.models.TowerConfig;
 import org.bukkit.Location;
+import org.bukkit.Material;
 
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 public class TowerBuildQueue implements Runnable {
@@ -45,12 +47,7 @@ public class TowerBuildQueue implements Runnable {
     }
 
     private boolean isBlockReplaceable(Location location) {
-        switch (location.getBlock().getType()) {
-            case AIR:
-                return true;
-            default:
-                return false;
-        }
+        return Objects.requireNonNull(location.getBlock().getType()) == Material.AIR;
     }
 
     @Override
