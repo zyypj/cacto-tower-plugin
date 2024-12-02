@@ -23,7 +23,7 @@ public class TowerBuildQueue implements Runnable {
     }
 
     public boolean haveSpace(Location baseLocation, int layers) {
-        for (int y = 1; y <= layers * 3; y++) {
+        for (int y = 1; y <= layers * 4; y++) {
             Location location = baseLocation.clone().add(0, y, 0);
             if (location.getBlock().getType() != Material.AIR) {
                 return false;
@@ -41,8 +41,10 @@ public class TowerBuildQueue implements Runnable {
         int layersBuilt = 0;
         while (!queue.isEmpty() && layersBuilt < maxLayersPerTick) {
             TowerBuildTask task = queue.peek();
+            System.out.println("Processando construção da torre...");
             if (task.buildTower() == 0) {
                 queue.poll();
+                System.out.println("Construção da torre concluída.");
             } else {
                 layersBuilt++;
             }

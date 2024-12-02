@@ -35,7 +35,6 @@ public class CustomStack {
         }
 
         ItemMeta meta = stack.getItemMeta();
-        meta.addItemFlags(org.bukkit.inventory.ItemFlag.values());
         stack.setItemMeta(meta);
 
         return stack;

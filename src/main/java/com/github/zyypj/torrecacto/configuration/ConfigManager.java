@@ -22,9 +22,8 @@ public class ConfigManager {
         if (towerSection != null) {
             for (String key : towerSection.getKeys(false)) {
                 ConfigurationSection section = towerSection.getConfigurationSection(key);
-                if (section != null && section.contains("item.material") && section.contains("layers")) {
+                if (section != null && section.contains("item.material") && section.contains("item.layers")) {
                     towers.put(key.toLowerCase(), new TowerConfig(section));
-                    plugin.debug("Carregada configuração da torre: " + key, true);
                 }
             }
         }
