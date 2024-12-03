@@ -1,7 +1,9 @@
 package com.github.zyypj.torrecacto.listeners;
 
 import com.github.zyypj.torrecacto.Main;
+import com.github.zyypj.torrecacto.models.TorreModel;
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +19,7 @@ public class TorresPlaceListener implements Listener {
     }
 
     @EventHandler
-    public void playerPlaceTower(PlayerInteractEvent e) {
+    public void playerPlaceTower(final PlayerInteractEvent e) {
         if (e.getItem() == null || e.getItem().getType() == Material.AIR) return;
 
         if (e.getClickedBlock() == null) {
@@ -25,20 +27,25 @@ public class TorresPlaceListener implements Listener {
             return;
         }
 
-        ItemStack item = e.getItem();
-        NBTItem nbtItem = new NBTItem(item);
+        final ItemStack item = e.getItem();
+        final NBTItem nbtItem = new NBTItem(item);
 
-        if (!nbtItem.hasKey("towerLayers")) return;
+        if (!nbtItem.hasKey("torre-key")) return;
 
-        int layers = nbtItem.getInteger("towerLayers");
+        final TorreModel torre = plugin.getConfigManager().getTowerConfig(nbtItem.getString("torre-key"));
+        final Location baseLocation = e.getClickedBlock().getLocation().add(0, 1, 0);
 
-        if (!plugin.getTorresBuildQueue().canPlace(e.getPlayer(), e.getClickedBlock().getLocation(), layers)) {
+        if (!plugin.getTorresBuildQueue().canPlace(e.getPlayer(), baseLocation, torre.getLayers())) {
             e.getPlayer().sendMessage(plugin.getConfigManager().getMessage("cant-put"));
             return;
         }
 
-        plugin.getTorresBuildQueue().addTask(e.getClickedBlock().getLocation(), plugin.getConfigManager().getTowerByLayers(layers));
+        plugin.getTorresBuildQueue().addTask(baseLocation, torre);
         e.getPlayer().sendMessage(plugin.getConfigManager().getMessage("tower-placed"));
-        item.setAmount(item.getAmount() - 1);
+
+        if(item.getAmount() > 1) {
+            item.setAmount(item.getAmount() - 1);
+            e.getPlayer().setItemInHand(item);
+        } else e.getPlayer().setItemInHand(null);
     }
 }

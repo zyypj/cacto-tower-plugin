@@ -18,6 +18,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         debug(" ", false);

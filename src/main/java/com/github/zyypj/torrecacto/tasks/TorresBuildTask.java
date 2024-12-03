@@ -1,19 +1,23 @@
 package com.github.zyypj.torrecacto.tasks;
 
 import com.github.zyypj.torrecacto.Main;
-import com.github.zyypj.torrecacto.models.TorreConfig;
+import com.github.zyypj.torrecacto.models.TorreModel;
+import com.github.zyypj.torrecacto.utils.ParticleUtils;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 
 public class TorresBuildTask {
 
     private final Main plugin;
     private final Location baseLocation;
-    private final TorreConfig config;
+    private final TorreModel config;
     private int currentLayer = 0;
 
-    public TorresBuildTask(Main plugin, Location baseLocation, TorreConfig config) {
+    public TorresBuildTask(Main plugin, Location baseLocation, TorreModel config) {
         this.plugin = plugin;
         this.baseLocation = baseLocation.clone();
         this.config = config;
@@ -28,7 +32,20 @@ public class TorresBuildTask {
         makeLayer(y, Material.STONE);
         makeLayer(y + 1, Material.SAND);
         makeLayer(y + 2, Material.CACTUS);
-        makeLayer(y + 3, Material.FENCE);
+
+        final Location fenceLocation = baseLocation.clone();
+        fenceLocation.getWorld().playSound(fenceLocation, Sound.NOTE_PLING, 1f, 0.1f * y);
+        fenceLocation.getWorld().getNearbyEntities(fenceLocation, 10, 10, 10).forEach(entity -> {
+            if(!(entity instanceof Player)) return;
+            for(int i = 0; i < 3; i++) {
+                final Location particleLocation = fenceLocation.clone();
+                fenceLocation.setY(y + i);
+                ParticleUtils.create((Player) entity, EnumParticle.FLAME, particleLocation, 5, 1, 1, 1, 0.2f);
+            }
+        });
+
+        fenceLocation.setY(y + 3);
+        placeBlock(fenceLocation, Material.FENCE);
 
         currentLayer++;
 
@@ -45,18 +62,18 @@ public class TorresBuildTask {
         Location locOeste = baseLocation.clone().add(-1, 0, 0);
         locOeste.setY(y);
 
-        placeBlock(locNorte, material);
-        placeBlock(locSul, material);
-        placeBlock(locLeste, material);
-        placeBlock(locOeste, material);
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            placeBlock(locNorte, material);
+            placeBlock(locSul, material);
+            placeBlock(locLeste, material);
+            placeBlock(locOeste, material);
+        });
     }
 
     private void placeBlock(Location location, Material material) {
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            if (location.getBlock().getType() != material) {
-                location.getBlock().setType(material);
-                location.getBlock().getState().update(true, true);
-            }
-        });
+        if (location.getBlock().getType() != material) {
+            location.getBlock().setType(material);
+            location.getBlock().getState().update(true, true);
+        }
     }
 }

@@ -4,10 +4,10 @@ import java.util.List;
 
 public class Text {
     public static String colorTranslate(String string) {
-        return string.replace("&","ยง");
+        return string.replace("&","§");
     }
     public static List<String> colorTranslate(List<String> stringList) {
-        stringList.replaceAll(s -> s.replace("&", "ยง"));
+        stringList.replaceAll(s -> s.replace("&", "§"));
         return stringList;
     }
     public static List<String> listReplace(List<String> list, String from, String to) {

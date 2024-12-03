@@ -1,7 +1,7 @@
 package com.github.zyypj.torrecacto.tasks;
 
 import com.github.zyypj.torrecacto.Main;
-import com.github.zyypj.torrecacto.models.TorreConfig;
+import com.github.zyypj.torrecacto.models.TorreModel;
 import com.intellectualcrafters.plot.api.PlotAPI;
 import com.intellectualcrafters.plot.object.Plot;
 import org.bukkit.Location;
@@ -25,7 +25,7 @@ public class TorresBuildQueue implements Runnable {
         this.maxLayersPerTick = 5;
     }
 
-    public void addTask(Location location, TorreConfig config) {
+    public void addTask(Location location, TorreModel config) {
         TorresBuildTask task = new TorresBuildTask(plugin, location, config);
         queue.add(task);
     }
@@ -56,16 +56,23 @@ public class TorresBuildQueue implements Runnable {
 
     @Override
     public void run() {
+        plugin.debug("1" , true);
+
         if (queue.isEmpty()) return;
+
+        plugin.debug("2" , true);
 
         int layersBuilt = 0;
 
         while (!queue.isEmpty() && layersBuilt < maxLayersPerTick) {
+            plugin.debug("A" , true);
             TorresBuildTask task = queue.peek();
 
             if (task.buildTower() == 0) {
+                plugin.debug("B" , true);
                 queue.poll();
             } else {
+                plugin.debug("C" , true);
                 layersBuilt++;
             }
         }

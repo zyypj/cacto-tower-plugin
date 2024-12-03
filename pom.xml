@@ -75,7 +75,7 @@
   <dependencies>
       <dependency>
           <groupId>org.spigotmc</groupId>
-          <artifactId>spigot-api</artifactId>
+          <artifactId>spigot</artifactId>
           <version>1.8.8-R0.1-SNAPSHOT</version>
           <scope>provided</scope>
       </dependency>
@@ -104,15 +104,15 @@
           <groupId>de.tr7zw</groupId>
           <artifactId>item-nbt-api-plugin</artifactId>
           <version>2.14.0</version>
-          <scope>provided</scope>
+          <scope>compile</scope>
       </dependency>
 
       <dependency>
-          <groupId>com.intellectualcrafts</groupId>
+          <groupId>plotsquared</groupId>
           <artifactId>plotsquared</artifactId>
-          <version>3.5.0</version>
+          <version>1.0.0</version>
           <scope>system</scope>
-          <systemPath>C:/Users/zyypj/Documents/IntelliJ/Bletzii/Dependencies/PlotSquared.jar</systemPath>
+          <systemPath>${project.basedir}/libs/plotsquared.jar</systemPath>
       </dependency>
   </dependencies>
 </project>

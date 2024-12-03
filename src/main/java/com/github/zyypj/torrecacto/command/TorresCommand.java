@@ -1,7 +1,7 @@
 package com.github.zyypj.torrecacto.command;
 
 import com.github.zyypj.torrecacto.Main;
-import com.github.zyypj.torrecacto.models.TorreConfig;
+import com.github.zyypj.torrecacto.models.TorreModel;
 import com.github.zyypj.torrecacto.utils.ItemBuilder;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
@@ -63,7 +63,7 @@ public class TorresCommand implements CommandExecutor {
             }
 
             String towerId = args[2];
-            TorreConfig config = plugin.getConfigManager().getTowerConfig(towerId);
+            TorreModel config = plugin.getConfigManager().getTowerConfig(towerId);
             if (config == null) {
                 sender.sendMessage("§cTorre com ID " + towerId + " não encontrada.");
                 return false;
@@ -77,26 +77,18 @@ public class TorresCommand implements CommandExecutor {
                 return false;
             }
 
-            ItemStack towerItem = new ItemBuilder(config.getItem())
-                    .amount(quantity)
-                    .displayname(config.getItemName())
-                    .lore(config.getItemLore())
-                    .build();
-
-            NBTItem nbtItem = new NBTItem(towerItem);
-            nbtItem.setInteger("towerLayers", config.getLayers());
-            towerItem = nbtItem.getItem();
-
-            target.getInventory().addItem(towerItem);
+            final ItemStack item = config.getItem().clone();
+            item.setAmount(quantity);
+            target.getInventory().addItem(item);
 
             sender.sendMessage(plugin.getConfigManager().getMessage("send-tower")
                     .replace("{AMOUNT}", String.valueOf(quantity))
-                    .replace("{TORRE-NAME}", config.getItemName())
+                    .replace("{TORRE-NAME}", config.getItem().getItemMeta().getDisplayName())
                     .replace("{JOGADOR}", target.getName())
                     .replace("&", "§"));
             target.sendMessage(plugin.getConfigManager().getMessage("receive-tower")
                     .replace("{AMOUNT}", String.valueOf(quantity))
-                    .replace("{TORRE-NAME}", config.getItemName())
+                    .replace("{TORRE-NAME}", config.getItem().getItemMeta().getDisplayName())
                     .replace("&", "§"));
             return true;
         }
