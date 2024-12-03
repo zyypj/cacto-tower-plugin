@@ -56,23 +56,17 @@ public class TorresBuildQueue implements Runnable {
 
     @Override
     public void run() {
-        plugin.debug("1" , true);
 
         if (queue.isEmpty()) return;
-
-        plugin.debug("2" , true);
 
         int layersBuilt = 0;
 
         while (!queue.isEmpty() && layersBuilt < maxLayersPerTick) {
-            plugin.debug("A" , true);
             TorresBuildTask task = queue.peek();
 
             if (task.buildTower() == 0) {
-                plugin.debug("B" , true);
                 queue.poll();
             } else {
-                plugin.debug("C" , true);
                 layersBuilt++;
             }
         }
