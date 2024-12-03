@@ -24,7 +24,6 @@ public class TorresBuildTask {
     }
 
     public int buildTower() {
-
         if (currentLayer >= config.getLayers()) return 0;
 
         int y = baseLocation.getBlockY() + (currentLayer * 4);
@@ -34,20 +33,22 @@ public class TorresBuildTask {
         makeLayer(y + 2, Material.CACTUS);
 
         final Location fenceLocation = baseLocation.clone();
-        fenceLocation.getWorld().playSound(fenceLocation, Sound.NOTE_PLING, 1f, 0.1f * y);
-        fenceLocation.getWorld().getNearbyEntities(fenceLocation, 10, 10, 10).forEach(entity -> {
-            if(!(entity instanceof Player)) return;
-            for(int i = 0; i < 3; i++) {
-                final Location particleLocation = fenceLocation.clone();
-                fenceLocation.setY(y + i);
-                ParticleUtils.create((Player) entity, EnumParticle.FLAME, particleLocation, 5, 1, 1, 1, 0.2f);
-            }
-        });
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            fenceLocation.getWorld().playSound(fenceLocation, Sound.NOTE_PLING, 1f, 0.1f * y);
+            fenceLocation.getWorld().getNearbyEntities(fenceLocation, 10, 10, 10).forEach(entity -> {
+                if (!(entity instanceof Player)) return;
+                for (int i = 0; i < 3; i++) {
+                    final Location particleLocation = fenceLocation.clone();
+                    particleLocation.setY(y + i);
+                    ParticleUtils.create((Player) entity, EnumParticle.FLAME, particleLocation, 5, 1, 1, 1, 0.2f);
+                }
+            });
 
-        fenceLocation.setY(y + 3);
-        placeBlock(fenceLocation, Material.FENCE);
+            fenceLocation.setY(y + 3);
+            placeBlock(fenceLocation, Material.FENCE);
 
-        currentLayer++;
+            currentLayer++;
+        }, 5L);
 
         return 1;
     }
