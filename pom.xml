@@ -77,7 +77,8 @@
           <groupId>org.spigotmc</groupId>
           <artifactId>spigot</artifactId>
           <version>1.8.8-R0.1-SNAPSHOT</version>
-          <scope>provided</scope>
+          <scope>system</scope>
+          <systemPath>${project.basedir}/libs/spigot.jar</systemPath>
       </dependency>
 
       <dependency>
@@ -112,7 +113,7 @@
           <artifactId>plotsquared</artifactId>
           <version>1.0.0</version>
           <scope>system</scope>
-          <systemPath>${project.basedir}/libs/plotsquared.jar</systemPath>
+          <systemPath>C:/Users/zyypj/Documents/IntelliJ/Bletzii/Dependencies/PlotSquared.jar</systemPath>
       </dependency>
   </dependencies>
 </project>
